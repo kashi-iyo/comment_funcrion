@@ -1,7 +1,22 @@
 h1 投稿詳細
-h3
-  = @post.user.email
-  = @post.title
-  = @post.description
-  = @post.content
-  = link_to 'ホーム', root_path
+
+div
+  p= @post.user.email
+  p= @post.title
+  p= @post.description
+  p= @post.content
+
+= form_with(model:[@post, @comment]) do |f|
+  p= f.text_area :content
+  p= f.hidden_field :post_id, value: @post.id
+  p= f.submit 'コメントする'
+
+h2 コメント一覧
+
+- @comments.each do |comment|
+  div
+    = link_to comment.user.email, comment.user
+    br
+    = comment.content
+
+p= link_to 'ホーム', root_path

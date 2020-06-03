@@ -4,16 +4,18 @@ class PostsController < ApplicationController
 
   def index
     @posts = Post.all
-    @post = Post.new
+    @post = current_user.posts.new
   end
 
   def show
     @post = Post.find(params[:id])
+    @comments = @post.comments
+    @comment = current_user.comments.new
   end
 
   def create
-    @post = Post.new(post_params)
-    @post.user_id = current_user.id
+    @post = current_user.posts.new(post_params)
+    # @post.user_id = current_user.id
     if @post.save
       redirect_back(fallback_location: root_path)
     else
