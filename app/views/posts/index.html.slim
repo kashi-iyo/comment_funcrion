@@ -1,0 +1,22 @@
+- if user_signed_in?
+  p= link_to 'マイページへ', user_path(current_user.id)
+  p= link_to 'ログアウト', destroy_user_session_path, method: :delete
+  h2 投稿する
+  = form_with model: @post do |f|
+    div
+      = f.text_field :title
+    div
+      = f.text_area :description
+    div
+      = f.text_area :content
+    = f.submit
+
+  h2 投稿一覧
+  - @posts.each do |post|
+    div
+      = link_to post.user.email, post.user
+    div
+      = link_to post.content, post
+- else
+  p= link_to 'ユーザー登録', new_user_registration_path
+  p= link_to 'ログイン', new_user_session_path
