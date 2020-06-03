@@ -1,0 +1,11 @@
+h1 ユーザー詳細ページ
+h3
+  = @user.email
+
+h2 投稿内容
+- @user.posts.each do |post|
+  = link_to post.content, post
+
+hr
+
+= link_to 'ホーム', root_path
