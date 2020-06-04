@@ -5,6 +5,11 @@ div
   p= @post.title
   p= @post.description
   p= @post.content
+  p= link_to '編集', edit_post_path(@post)
+
+div
+  - @post_tags.each do |tag|
+    p= link_to tag.post_tag_name, posts_path(post_tag_id: tag.id)
 
 = form_with(model:[@post, @comment]) do |f|
   p= f.text_area :content

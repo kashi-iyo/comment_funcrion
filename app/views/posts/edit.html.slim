@@ -1,2 +1,8 @@
-h1 Posts#edit
-p Find me in app/views/posts/edit.html.slim
+h3 編集する
+= form_with model: @post do |f|
+  div
+    p= f.text_field :title, placeholder: 'タイトル'
+    p= f.text_area :description, placeholder: 'あらすじ'
+    p= f.text_area :content, placeholder: '本文'
+    p= f.text_field :post_tag_name, value: @tag_list, placeholder: 'タグ'
+    p= f.submit
