@@ -5,17 +5,24 @@
   p= link_to 'ユーザー登録', new_user_registration_path
   p= link_to 'ログイン', new_user_session_path
 
-h2 投稿する
+h3 タグリスト
+- @tag_list.each do |list|
+  p
+    = link_to list.post_tag_name, posts_path(post_tag_id: list.id)
+    = list.posts.count
+
+h3 投稿する
 = form_with model: @post do |f|
   div
-    p= f.text_field :title
-    p= f.text_area :description
-    p= f.text_area :content
+    p= f.text_field :title, placeholder: 'タイトル'
+    p= f.text_area :description, placeholder: 'あらすじ'
+    p= f.text_area :content, placeholder: '本文'
+    p= f.text_field :post_tag_name, placeholder: 'タグ'
     p= f.submit
 
-  h2 投稿一覧
-  - @posts.each do |post|
-    p
-      = link_to post.user.email, post.user
-      br
-      = link_to post.content, post
+h3 投稿一覧
+- @posts.each do |post|
+  p
+    = link_to post.user.email, post.user
+    br
+    = link_to post.content, post
