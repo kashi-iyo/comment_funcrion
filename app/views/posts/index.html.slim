@@ -1,28 +1,42 @@
 - if user_signed_in?
-  p= link_to 'マイページへ', user_path(current_user.id)
-  p= link_to 'ログアウト', destroy_user_session_path, method: :delete
+  = link_to 'マイページへ', user_path(current_user.id)
+  = link_to 'ログアウト', destroy_user_session_path, method: :delete
 - else
-  p= link_to 'ユーザー登録', new_user_registration_path
-  p= link_to 'ログイン', new_user_session_path
+  = link_to 'ユーザー登録', new_user_registration_path
+  = link_to 'ログイン', new_user_session_path
+
+br
 
 h3 タグリスト
 - @tag_list.each do |list|
-  p
     = link_to list.post_tag_name, posts_path(post_tag_id: list.id)
-    = list.posts.count
+    = "(#{list.posts.count})"
+
+br
 
 h3 投稿する
-= form_with model: @post do |f|
-  div
-    p= f.text_field :title, placeholder: 'タイトル'
-    p= f.text_area :description, placeholder: 'あらすじ'
-    p= f.text_area :content, placeholder: '本文'
-    p= f.text_field :post_tag_name, placeholder: 'タグ'
-    p= f.submit
+= form_with(model: @post, url: posts_path, local: true) do |f|
+  / = f.text_field :title, placeholder: 'タイトル'
+  / br
+  / = f.text_area :description, placeholder: 'あらすじ'
+  / br
+  = f.text_area :content, placeholder: '本文'
+  br
+  = f.text_field :post_tag_name, placeholder: 'タグを作成できます'
+  br
+  = f.collection_check_boxes(:post_tag_ids, PostTag.all, :id, :post_tag_name) do |tag|
+    = tag.check_box
+    = tag.text
+  br
+  = f.submit
 
+h3 タグを選択する
+=
+
+br
 h3 投稿一覧
 - @posts.each do |post|
   p
-    = link_to post.user.email, post.user
-    br
+    / = link_to post.user.email, post.user
+    / br
     = link_to post.content, post

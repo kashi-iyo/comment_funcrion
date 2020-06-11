@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_action :authenticate_user!, only: [:show, :create]
+  # before_action :authenticate_user!, only: [:show, :create]
 
   def index
     @tag_list = PostTag.all
@@ -52,6 +52,7 @@ class PostsController < ApplicationController
 
   private
   def post_params
-    params.require(:post).permit(:title, :description, :content)
+    # params.require(:post).permit(:title, :description, :content)
+    params.require(:post).permit(:content, { post_tag_ids: [] })
   end
 end

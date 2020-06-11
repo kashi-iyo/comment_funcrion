@@ -1,27 +1,30 @@
 h1 投稿詳細
 
 div
-  p= @post.user.email
-  p= @post.title
-  p= @post.description
+  / p= @post.user.email
+  / p= @post.title
+  / p= "投稿内容が入ります。"
+  / p= @post.description
   p= @post.content
-  p= link_to '編集', edit_post_path(@post)
+  / p= link_to '編集', edit_post_path(@post)
 
 div
+  = "タグ一覧"
   - @post_tags.each do |tag|
-    p= link_to tag.post_tag_name, posts_path(post_tag_id: tag.id)
+    div
+      = link_to tag.post_tag_name, posts_path(post_tag_id: tag.id)
 
-= form_with(model:[@post, @comment]) do |f|
-  p= f.text_area :content
-  p= f.hidden_field :post_id, value: @post.id
-  p= f.submit 'コメントする'
-
-h2 コメント一覧
-
-- @comments.each do |comment|
-  div
-    = link_to comment.user.email, comment.user
-    br
-    = comment.content
-
-p= link_to 'ホーム', root_path
+/ = form_with(model:[@post, @comment], method: :post) do |f|
+/     = f.text_area :content
+/     = f.hidden_field :post_id, value: @post.id
+/     = f.submit 'コメントする'
+/
+/ h2 コメント一覧
+/
+/ - @comments.each do |comment|
+/   p
+/     = link_to comment.user.email, comment.user
+/
+/     = comment.content
+br
+= link_to 'ホーム', root_path
