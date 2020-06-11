@@ -1,9 +1,9 @@
 class Post < ApplicationRecord
   belongs_to :user
-  has_many :comments
+  has_many :comments, dependent: :destroy
 
   has_many :post_tag_maps, dependent: :destroy
-  has_many :post_tags, through: :post_tag_maps
+  has_many :post_tags, through: :post_tag_maps, dependent: :destroy
 
   def save_tag(sent_tags)
     current_tags = self.post_tags.pluck(:post_tag_name) unless self.post_tags.nil?
