@@ -7,4 +7,9 @@ Rails.application.routes.draw do
   resources :posts  do
     resources :comments, only: [:create]
   end
+
+  #タグの検索結果表示
+  resources :post_tags do
+    get 'posts', to: 'posts#search'
+  end
 end
