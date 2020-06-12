@@ -1,15 +1,17 @@
-- if user_signed_in?
-  = link_to 'マイページへ', user_path(current_user.id)
-  = link_to 'ログアウト', destroy_user_session_path, method: :delete
-- else
-  = link_to 'ユーザー登録', new_user_registration_path
-  = link_to 'ログイン', new_user_session_path
+/ - if user_signed_in?
+/   = link_to 'マイページへ', user_path(current_user.id)
+/   = link_to 'ログアウト', destroy_user_session_path, method: :delete
+/ - else
+/   = link_to 'ユーザー登録', new_user_registration_path
+/   = link_to 'ログイン', new_user_session_path
 
 br
 
 h3 タグリスト
+
 - @tag_list.each do |list|
-    = link_to list.post_tag_name, posts_path(post_tag_id: list.id)
+  span
+    = link_to list.post_tag_name, post_tag_posts_path(post_tag_id: list.id)
     = "(#{list.posts.count})"
 
 br
@@ -29,7 +31,7 @@ h3 投稿する
   br
   = "例：音楽 文芸 スポーツ"
   br
-  = f.text_field :post_tag_name, placeholder: 'タグを作成する', class: 'tag-text'
+  = f.text_field :post_tag_name, placeholder: '投稿にタグ付けする', class: 'tag-text'
   br
   / = "【タグを選択できます】"
   / = f.collection_check_boxes :post_tag_ids, @tag_list, :id, :post_tag_name, include_hidden: false do |tag|

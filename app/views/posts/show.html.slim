@@ -8,12 +8,12 @@ div
   p= @post.content
   / p= link_to '編集', edit_post_path(@post)
 
-div
-  = "タグ一覧"
-  - @post_tags.each do |tag|
-    div
-      = link_to tag.post_tag_name, posts_path(post_tag_id: tag.id)
 
+= "タグ: "
+- @post_tags.each do |tag|
+  span
+    = link_to tag.post_tag_name, post_tag_posts_path(post_tag_id: tag.id)
+    = "(#{tag.posts.count})"
 / = form_with(model:[@post, @comment], method: :post) do |f|
 /     = f.text_area :content
 /     = f.hidden_field :post_id, value: @post.id
@@ -26,5 +26,6 @@ div
 /     = link_to comment.user.email, comment.user
 /
 /     = comment.content
+br
 br
 = link_to 'ホーム', root_path

@@ -1,0 +1,23 @@
+h2 投稿一覧
+hr
+h3 タグリスト
+
+- @tag_list.each do |list|
+  span
+    = link_to list.post_tag_name, post_tag_posts_path(post_tag_id: list.id)
+    = "(#{list.posts.count})"
+hr
+br
+br
+= "タグが ─ "
+strong
+  = "#{@tag.post_tag_name}"
+= " ─ の投稿一覧"
+br
+- @posts.each do |post|
+  p
+    / = link_to post.user.email, post.user
+    / br
+    = link_to post.content, post
+br
+= link_to 'ホーム', root_path
