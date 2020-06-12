@@ -23,14 +23,14 @@ class PostsController < ApplicationController
 
 
   def create
-    @post = current_user.posts.new(post_params)
-    tag_list = params[:post][:post_tag_name].split(',')
-    if @post.save
-      @post.save_tag(tag_list)
-      redirect_back(fallback_location: root_path)
-    else
-      redirect_back(fallback_location: root_path)
-    end
+      @post = current_user.posts.new(post_params)
+      @tag_list = params[:post][:post_tag_name].split(nil)
+      if @post.save
+        @post.save_tag(@tag_list)
+        redirect_back(fallback_location: root_path)
+      else
+        redirect_back(fallback_location: root_path)
+      end
   end
 
   def edit
@@ -40,9 +40,9 @@ class PostsController < ApplicationController
 
   def update
     @post = current_user.posts.find(params[:id])
-    tag_list = params[:post][:post_tag_name].split(',')
+    @tag_list = params[:post][:post_tag_name].split(',')
     if @post.update(post_params)
-      @post.save_tag(tag_list)
+      @post.save_tag(@tag_list)
       # redirect_back(fallback_location: root_path)
       redirect_to post_path
     else

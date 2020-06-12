@@ -13,6 +13,8 @@ h3 タグリスト
     = "(#{list.posts.count})"
 
 br
+hr
+br
 
 h3 投稿する
 = form_with(model: @post, url: posts_path, local: true) do |f|
@@ -20,20 +22,27 @@ h3 投稿する
   / br
   / = f.text_area :description, placeholder: 'あらすじ'
   / br
-  = f.text_area :content, placeholder: '本文'
+  = f.text_area :content, placeholder: '本文', class: 'post-text'
   br
-  = f.text_field :post_tag_name, placeholder: 'タグを作成できます'
   br
-  = f.collection_check_boxes(:post_tag_ids, PostTag.all, :id, :post_tag_name) do |tag|
-    = tag.check_box
-    = tag.text
+  = "スペースを入力することで複数のタグを付けることができます。"
+  br
+  = "例：音楽 文芸 スポーツ"
+  br
+  = f.text_field :post_tag_name, placeholder: 'タグを作成する', class: 'tag-text'
+  br
+  / = "【タグを選択できます】"
+  / = f.collection_check_boxes :post_tag_ids, @tag_list, :id, :post_tag_name, include_hidden: false do |tag|
+  /   = tag.check_box
+  /   = tag.text
+  br
   br
   = f.submit
 
-h3 タグを選択する
-=
-
 br
+hr
+br
+
 h3 投稿一覧
 - @posts.each do |post|
   p
