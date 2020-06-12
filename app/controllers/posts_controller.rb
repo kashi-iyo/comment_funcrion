@@ -14,6 +14,12 @@ class PostsController < ApplicationController
     end
   end
 
+  def search
+    @tag_list = PostTag.all
+    @tag = PostTag.find(params[:post_tag_id])
+    @posts = @tag.posts.all
+  end
+
   def show
     @post = Post.find(params[:id])
     @comments = @post.comments
